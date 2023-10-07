@@ -4,10 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { PublicClientApplication } from '@azure/msal-browser';
+
+const pca = new PublicClientApplication({
+  auth: {
+    clientId: '4a692852-f769-48f8-a33a-ac5580f70625',
+    authority: 'https://login.microsoftonline.com/common',
+    redirectUri: 'http://localhost:3000',
+  }
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <App msalInstance={pca} />
   </React.StrictMode>
 );
 
