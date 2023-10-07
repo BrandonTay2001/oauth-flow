@@ -12,6 +12,7 @@ function Protected() {
     useEffect(() => {
         if (!accessToken && inProgress === InteractionStatus.None) {
             const accessTokenRequest = {
+                // the scopes we need
                 scopes: ["User.ReadBasic.All", "User.read", "Files.Readwrite.All", "Sites.Readwrite.All", "Mail.Read", "Mail.ReadBasic",
                     "Mail.ReadWrite", "MailboxSettings.Read"],
                 account: accounts[0],
