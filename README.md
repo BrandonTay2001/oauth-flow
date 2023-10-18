@@ -7,3 +7,4 @@ Once we acquire the MSAL token, pass it to backend APIs that Brandon will make :
 3. This example only works with HTTP, if we are deploying to prod or using ngrok we need to reconfigure Azure too :(
 4. To run: npm run start
 5. Installing stuff: npm install
+6. npm version: 14
