@@ -3,7 +3,8 @@ import {
     InteractionStatus,
 } from "@azure/msal-browser";
 import { useMsal } from "@azure/msal-react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import App from './App';
 
 function Protected() {
     const { instance, inProgress, accounts } = useMsal();
@@ -46,7 +47,7 @@ function Protected() {
         }
     }, [instance, accounts, inProgress, accessToken]);
 
-    return <p>Return your protected content here: {accessToken}</p>;
+    return accessToken;
 }
 
 export default Protected;
