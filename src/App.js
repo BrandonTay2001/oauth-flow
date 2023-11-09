@@ -10,7 +10,7 @@ const App = ({ msalInstance }) => {
   const { page, setPage } = useState(1);
 
 
-  getAllEmails(){
+  const getAllEmails = () => {
     fetch("http://www.localhost:3001/emails/page=" + this.state.page, {
       method: 'GET',
       headers: {
