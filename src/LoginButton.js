@@ -36,7 +36,6 @@ const LoginButton = () => {
       ) : (
         <div>
             <button onClick={handleLogout}>Logout</button>
-            <Protected />
         </div>
       )}
     </div>
