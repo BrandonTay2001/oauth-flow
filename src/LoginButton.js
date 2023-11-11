@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMsal } from '@azure/msal-react';
-import Protected from './Protected';
+import Emails from './Emails';
 
 const LoginButton = () => {
   const { instance, accounts } = useMsal(); // basically everything with auth uses the instance from MSAL

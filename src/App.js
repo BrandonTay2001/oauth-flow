@@ -1,18 +1,19 @@
 import './App.css';
 import LoginButton from './LoginButton';
 import { MsalProvider } from "@azure/msal-react";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Protected from './Protected';
 import Emails from './Emails';
-
+import Pages from './Pages';
 const App = () => {
 
   const { emails, setEmails } = useState(null);
   const { page, setPage } = useState(1);
 
 
-  const getAllEmails = () => {
-    fetch("http://127.0.0.1:5000/emails/?page=" + this.state.page, {
+  function getAllEmails(pageInt = page){
+    
+    fetch("http://127.0.0.1:5000/emails/?page=" + pageInt, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -26,7 +27,7 @@ const App = () => {
       console.log(error);
     })
   };
-
+  
   return (
     <div>
       {emails === null &&  
@@ -39,19 +40,20 @@ const App = () => {
       {emails !== null &&
         <>
         <LoginButton />
-        <Emails emails={emails}/>
+        <Emails emails={emails} />
+        <Pages pageNum={ 5} setPage={setPage}/>
         </>
         }
       
     </div>
-   
+
   );
 };
 
 const AppWithMsal = ({ msalInstance }) => {
   return (
     <MsalProvider instance={msalInstance}>
-      <App msalInstance={msalInstance} />
+      <App />
     </MsalProvider>
   );
 };
