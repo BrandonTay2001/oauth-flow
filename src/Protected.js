@@ -3,7 +3,8 @@ import {
     InteractionStatus,
 } from "@azure/msal-browser";
 import { useMsal } from "@azure/msal-react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import $ from 'jquery';
 
 function Protected() {
     const { instance, inProgress, accounts } = useMsal();
@@ -26,6 +27,18 @@ function Protected() {
                     // Acquire token silent success
                     let accessToken = accessTokenResponse.accessToken;
                     setAccessToken(accessToken);
+
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: 'http://localhost:5000',
+                        beforeSend: function (req) {
+                            req.setRequestHeader('Access-Token', accessToken);
+                        },
+                        success: function (res) {
+                            console.log(res);
+                        }
+                    });
                 })
                 .catch((error) => {
                     if (error instanceof InteractionRequiredAuthError) {
@@ -46,7 +59,7 @@ function Protected() {
         }
     }, [instance, accounts, inProgress, accessToken]);
 
-    return <p>Return your protected content here: {accessToken}</p>;
+    return accessToken;
 }
 
 export default Protected;

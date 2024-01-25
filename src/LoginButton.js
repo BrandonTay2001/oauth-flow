@@ -1,8 +1,8 @@
 import React from 'react';
 import { useMsal } from '@azure/msal-react';
-import Protected from './Protected';
 
-const LoginButton = () => {
+
+function LoginButton(props) {
   const { instance, accounts } = useMsal(); // basically everything with auth uses the instance from MSAL
   // accounts is an array of all the accounts that are signed in
 
@@ -16,9 +16,11 @@ const LoginButton = () => {
     try {
       // Open a popup for login
       let response = await instance.loginRedirect(loginRequest);
+      console.log(response);
     } catch (error) {
       console.log(error);
     }
+    props.updateLogin(1);
   };
 
   const handleLogout = () => {
@@ -27,18 +29,19 @@ const LoginButton = () => {
     };
 
     instance.logoutPopup(logoutRequest);
+    props.updateLogin(0);
   };
 
   return (
     <div>
-      {accounts.length === 0 ? (
-        <button onClick={handleLogin}>Login</button>
+        {accounts.length === 0 ? (
+        <button id="login-button" onClick={handleLogin}>Login</button>
       ) : (
         <div>
-            <button onClick={handleLogout}>Logout</button>
-            <Protected />
+            <button id="login-button" onClick={handleLogout}>Logout</button>
         </div>
       )}
+    
     </div>
   );
 };

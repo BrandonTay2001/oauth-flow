@@ -1,16 +1,29 @@
 .App {
   text-align: center;
+  background-color: #F2E9E4;
+  
+}
+#top-bar{
+  display: flex;
+  justify-content: space-around;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#logo{
+  margin-top: 1%;
+  height: 4%;
+  width: 4%;
+  float: left;
+  display: inline;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#searchString{
+  margin-top: 2%;
+  width: 50%;
+  height: 50%;
+}
+#login-button{
+  margin-top: 55%;
+  justify-content: flex-end;
 }
 
 .App-header {
