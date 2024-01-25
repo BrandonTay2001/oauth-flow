@@ -21,11 +21,12 @@ class App extends React.Component{
   render() {
     return (
       <MsalProvider instance={this.props.msalInstance}>
-        <div id='top-bar'>
-          <img src={logo} alt="logo" id="logo" />
-          <input type="text" id="searchString"/>
-          <LoginButton id="login-button"setLogin={this.updateLogin} />
-      </div>
+          <div id='top-bar'>
+            <img src={logo} alt="logo" id="logo" />
+            <input type="text" id="searchString"/>
+            <LoginButton id="login-button"setLogin={this.updateLogin} />
+          </div>
+
       </MsalProvider>
     )
   };
