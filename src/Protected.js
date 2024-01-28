@@ -28,17 +28,33 @@ function Protected() {
                     let accessToken = accessTokenResponse.accessToken;
                     setAccessToken(accessToken);
 
-                    $.ajax({
-                        type: 'POST',
-                        dataType: 'json',
-                        url: 'http://localhost:5000',
-                        beforeSend: function (req) {
-                            req.setRequestHeader('Access-Token', accessToken);
-                        },
-                        success: function (res) {
-                            console.log(res);
+                    // changed to fetch from ajax (commented out)
+                    fetch('http://localhost:5000', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Token': accessToken
                         }
-                    });
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    
+                    // $.ajax({
+                    //     type: 'POST',
+                    //     dataType: 'json',
+                    //     url: 'http://localhost:5000',
+                    //     beforeSend: function (req) {
+                    //         req.setRequestHeader('Access-Token', accessToken);
+                    //     },
+                    //     success: function (res) {
+                    //         console.log(res);
+                    //     }
+                    // });
                 })
                 .catch((error) => {
                     if (error instanceof InteractionRequiredAuthError) {
