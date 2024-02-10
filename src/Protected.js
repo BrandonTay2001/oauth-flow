@@ -4,7 +4,6 @@ import {
 } from "@azure/msal-browser";
 import { useMsal } from "@azure/msal-react";
 import { useState, useEffect } from "react";
-import $ from 'jquery';
 
 function Protected() {
     const { instance, inProgress, accounts } = useMsal();
@@ -43,18 +42,7 @@ function Protected() {
                     .catch(error => {
                         console.log(error);
                     })
-                    
-                    // $.ajax({
-                    //     type: 'POST',
-                    //     dataType: 'json',
-                    //     url: 'http://localhost:5000',
-                    //     beforeSend: function (req) {
-                    //         req.setRequestHeader('Access-Token', accessToken);
-                    //     },
-                    //     success: function (res) {
-                    //         console.log(res);
-                    //     }
-                    // });
+            
                 })
                 .catch((error) => {
                     if (error instanceof InteractionRequiredAuthError) {

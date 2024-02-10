@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMsal } from '@azure/msal-react';
 
 
@@ -20,7 +20,6 @@ function LoginButton(props) {
     } catch (error) {
       console.log(error);
     }
-    props.updateLogin(1);
   };
 
   const handleLogout = () => {
@@ -29,19 +28,25 @@ function LoginButton(props) {
     };
 
     instance.logoutPopup(logoutRequest);
-    props.updateLogin(0);
   };
+
+  useEffect(() => {
+    if (accounts.length === 0) {
+      props.updateLogin({ login: 0 });
+    } else {
+      props.updateLogin({ login: 1 });
+    }
+  }, [accounts, props]);
 
   return (
     <div>
-        {accounts.length === 0 ? (
+        {accounts.length === 0 ? ( 
         <button id="login-button" onClick={handleLogin}>Login</button>
       ) : (
         <div>
             <button id="login-button" onClick={handleLogout}>Logout</button>
-        </div>
+          </div>
       )}
-    
     </div>
   );
 };
