@@ -33,10 +33,12 @@ function LoginButton(props) {
   useEffect(() => {
     if (accounts.length === 0) {
       props.updateLogin({ login: 0 });
+      props.updateToken({ token: "" });
     } else {
       props.updateLogin({ login: 1 });
     }
   }, [accounts, props]);
+
 
   return (
     <div>
