@@ -5,7 +5,7 @@ import {
 import { useMsal } from "@azure/msal-react";
 import { useState, useEffect } from "react";
 
-function Protected() {
+function Protected(props) {
     const { instance, inProgress, accounts } = useMsal();
     const [accessToken, setAccessToken] = useState(null);
 
@@ -26,6 +26,7 @@ function Protected() {
                     // Acquire token silent success
                     let accessToken = accessTokenResponse.accessToken;
                     setAccessToken(accessToken);
+                    props.updateToken({ token: accessToken });
 
                     // changed to fetch from ajax (commented out)
                     fetch('http://localhost:5000', {
@@ -42,7 +43,7 @@ function Protected() {
                     .catch(error => {
                         console.log(error);
                     })
-            
+                    
                 })
                 .catch((error) => {
                     if (error instanceof InteractionRequiredAuthError) {
@@ -61,9 +62,9 @@ function Protected() {
                     console.log(error);
                 });
         }
-    }, [instance, accounts, inProgress, accessToken]);
+    }, [instance, accounts, inProgress, accessToken, props]);
 
-    return accessToken;
+    return;
 }
 
 export default Protected;
