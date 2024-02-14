@@ -35,8 +35,7 @@ class App extends React.Component{
       success: function(res){
         this.setState({emails: res.emails, total_num: res.totalEmails});
       }
-      }
-    )
+    })
   }
 
   render() {
