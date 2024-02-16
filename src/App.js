@@ -5,7 +5,7 @@ import { MsalProvider } from "@azure/msal-react";
 import logo from "./logo.png";
 import Protected from './Protected';
 import Emails from './Emails';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 
 class App extends React.Component{
@@ -21,22 +21,39 @@ class App extends React.Component{
     this.setState(nextState);
   }
 
-  getEmails(page, token){
-
-    $.ajax({
-      type: 'GET',
-      dataType: 'json',
-      url:'http://localhost:5000/emails?page='+page,
-      xhrFields: { withCredentials: true },
+  getEmails(page, token) {
+    fetch('http://localhost:5000/emails?page='+page, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Access-Token': token
-      },
-      success: function(res){
-        this.setState({emails: res.emails, total_num: res.totalEmails});
       }
     })
+    .then(response => response.json())
+    .then(data => {
+      this.setState({ emails: data.emails, total_num: data.totalEmails });
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
+  // getEmails(page, token){
+
+  //   $.ajax({
+  //     type: 'GET',
+  //     dataType: 'json',
+  //     url:'http://localhost:5000/emails?page='+page,
+  //     xhrFields: { withCredentials: true },
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Access-Token': token
+  //     },
+  //     success: function(res){
+  //       this.setState({emails: res.emails, total_num: res.totalEmails});
+  //     }
+  //     }
+  //   )
+  // }
 
   render() {
     return (
@@ -44,9 +61,9 @@ class App extends React.Component{
           <div id='top-bar'>
             <img src={logo} alt="logo" id="logo" />
             <input type="text" id="searchString"/>
-          <LoginButton id="login-button" updateLogin={this.update} updateToken={this.update} getEmails={ this.getEmails} token={this.state.token} />
+          <LoginButton id="login-button" updateLogin={this.update} updateToken={this.update}  getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
         </div>
-        <Protected updateToken={this.update} />
+        <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
         
         
         {this.state.token !== "" && <Emails page={this.state.page} emails={this.state.emails} />}

@@ -28,21 +28,21 @@ function Protected(props) {
                     setAccessToken(accessToken);
                     props.updateToken({ token: accessToken });
 
-                    // changed to fetch from ajax (commented out)
-                    // fetch('http://localhost:5000', {
-                    //     method: 'POST',
-                    //     headers: {
-                    //         'Content-Type': 'application/json',
-                    //         'Access-Token': accessToken
-                    //     }
-                    // })
-                    // .then(response => response.json())
-                    // .then(data => {
-                    //     console.log(data);
-                    // })
-                    // .catch(error => {
-                    //     console.log(error);
-                    // })
+                    fetch('http://localhost:5000/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Access-Token': accessToken
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        props.getEmails(props.page, accessToken);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
                     
                 })
                 .catch((error) => {

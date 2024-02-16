@@ -29,14 +29,22 @@ function LoginButton(props) {
 
     instance.logoutPopup(logoutRequest);
   };
-
+  
   useEffect(() => {
-    if (accounts.length === 0) {
-      props.updateLogin({ login: 0 });
-      props.updateToken({ token: "" });
-    } else {
-      props.updateLogin({ login: 1 });
-    }
+
+    let timer = setTimeout(() => {
+      if (accounts.length === 0) {
+        props.updateLogin({ login: 0 });
+        props.updateToken({ token: "" });
+      } else {
+        props.updateLogin({ login: 1 });
+        if (props.token !== "") {
+          props.getEmails(props.page, props.token)
+        }
+      }
+    }, 60000)
+    return () => clearTimeout(timer);
+    
   }, [accounts, props]);
 
 
