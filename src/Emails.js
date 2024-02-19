@@ -35,7 +35,6 @@ function Emails(props) {
                     console.log(accessToken)
 
                     fetch('http://localhost:5000/emails?page=1', {
-                        mode: 'cors',
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
