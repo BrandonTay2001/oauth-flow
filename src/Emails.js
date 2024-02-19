@@ -34,8 +34,8 @@ function Emails(props) {
                     
                     console.log(accessToken)
 
-                    fetch('http://localhost:5000/emails?page=1', {
-                        method: 'GET',
+                    fetch('http://localhost:5000/health', {
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'Access-Token': accessToken,
