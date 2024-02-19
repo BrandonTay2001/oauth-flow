@@ -42,7 +42,7 @@ function LoginButton(props) {
           props.getEmails(props.page, props.token)
         }
       }
-    }, 60000)
+    }, 2700000); // Change the delay to 45 minutes (2700000 milliseconds)
     return () => clearTimeout(timer);
     
   }, [accounts, props]);

@@ -28,22 +28,8 @@ function Protected(props) {
                     setAccessToken(accessToken);
                     props.updateToken({ token: accessToken });
 
-                    fetch('http://localhost:5000/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Access-Token': accessToken
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        props.getEmails(props.page, accessToken);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-                    
+                    // we dont need to send the POST request that was just an example
+                    props.getEmails(props.page, accessToken);
                 })
                 .catch((error) => {
                     if (error instanceof InteractionRequiredAuthError) {
