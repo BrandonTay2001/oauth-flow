@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import LoginButton from './LoginButton';
-import { MsalProvider } from "@azure/msal-react";
+import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from "@azure/msal-react";
 import logo from "./logo.png";
 import Protected from './Protected';
 import Emails from './Emails';
@@ -31,42 +31,31 @@ class App extends React.Component{
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data)
       this.setState({ emails: data.emails, total_num: data.totalEmails });
     })
     .catch(error => {
       console.log(error);
     })
   }
-  // getEmails(page, token){
-
-  //   $.ajax({
-  //     type: 'GET',
-  //     dataType: 'json',
-  //     url:'http://localhost:5000/emails?page='+page,
-  //     xhrFields: { withCredentials: true },
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Access-Token': token
-  //     },
-  //     success: function(res){
-  //       this.setState({emails: res.emails, total_num: res.totalEmails});
-  //     }
-  //     }
-  //   )
-  // }
 
   render() {
     return (
       <MsalProvider instance={this.props.msalInstance}>
-          <div id='top-bar'>
-            <img src={logo} alt="logo" id="logo" />
-            <input type="text" id="searchString"/>
-          <LoginButton id="login-button" updateLogin={this.update} updateToken={this.update}  getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
+        <div id='top-bar'>
+          <img src={logo} alt="logo" id="logo" />
+          <input type="text" id="searchString"/>
+          <LoginButton id="login-button" />
         </div>
-        <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
-        
-        
-        {this.state.token !== "" && <Emails page={this.state.page} emails={this.state.emails} />}
+
+        {/* rendered when the user is authenticated */}
+        <AuthenticatedTemplate>
+          <Emails page={this.state.page} updateToken={this.update} />
+        </AuthenticatedTemplate>
+      
+        <UnauthenticatedTemplate>
+          <h1>Please sign in to continue</h1>
+        </UnauthenticatedTemplate>
       </MsalProvider>
     )
   };
