@@ -2,9 +2,11 @@ import './App.css';
 import React from 'react';
 import LoginButton from './LoginButton';
 import { MsalProvider } from "@azure/msal-react";
-import logo from "./logo.png";
+import logo from "./image/logo.png";
 import Protected from './Protected';
 import Emails from './Emails';
+import PageBar from './PageBar';
+import ContentBar from './ContentBar';
 // import $ from 'jquery';
 
 
@@ -12,7 +14,8 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: "inbox", page: 1, total_num: -1, token: "" , emails: [], selected_email: -1};
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1 };
+    
     this.update = this.update.bind(this);
     this.getEmails = this.getEmails.bind(this);
   };
@@ -22,38 +25,22 @@ class App extends React.Component{
   }
 
   getEmails(page, token) {
-    fetch('http://localhost:5000/emails?page='+page, {
+    fetch('http://localhost:5000/emails?page=' + page, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Access-Token': token
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      this.setState({ emails: data.emails, total_num: data.totalEmails });
-    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data.emails, data.totalEmails);
+        this.update({ emails: data.emails, total_num: data.totalEmails });
+      })
     .catch(error => {
       console.log(error);
     })
   }
-  // getEmails(page, token){
-
-  //   $.ajax({
-  //     type: 'GET',
-  //     dataType: 'json',
-  //     url:'http://localhost:5000/emails?page='+page,
-  //     xhrFields: { withCredentials: true },
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Access-Token': token
-  //     },
-  //     success: function(res){
-  //       this.setState({emails: res.emails, total_num: res.totalEmails});
-  //     }
-  //     }
-  //   )
-  // }
 
   render() {
     return (
@@ -65,8 +52,9 @@ class App extends React.Component{
         </div>
         <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
         
-        
-        {this.state.token !== "" && <Emails page={this.state.page} emails={this.state.emails} />}
+        {this.state.token !== "" && <ContentBar id="content-col" updateFolder={this.update} folder={this.state.folder} />}
+        {this.state.token !== "" && <Emails id="email-col"page={this.state.page} emails={this.state.emails} token={ this.state.token} />}
+        {this.state.token !== "" && <PageBar id="page-bar" page={ this.state.page} updatePage={this.update} total_num={ this.state.total_num} />}
       </MsalProvider>
     )
   };

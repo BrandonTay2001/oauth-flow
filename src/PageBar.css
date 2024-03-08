@@ -1,0 +1,21 @@
+#page-bar{
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 10%;
+}
+
+#last-page{
+    height: 2%;
+    width: 2%;
+    padding-right: 1%;
+}
+
+#hint-page{
+    text-align: center;
+}
+
+#next-page{
+    height: 2%;
+    width: 2%;
+    padding-left: 1%;
+}

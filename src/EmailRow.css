@@ -1,0 +1,18 @@
+#preview-row{
+    display: inline-block;
+    padding-bottom: 0.5%;
+}
+#sender{
+    text-align: left;
+    padding-inline-start: 1%;
+    padding-inline-end: 2%;
+}
+
+#subject{
+    padding-inline-end: 2%;
+}
+
+#date{
+    text-align: right;
+    padding-inline-end: 1%;
+}

@@ -39,7 +39,7 @@ function LoginButton(props) {
       } else {
         props.updateLogin({ login: 1 });
         if (props.token !== "") {
-          props.getEmails(props.page, props.token)
+          props.getEmails(props.page, props.token);
         }
       }
     }, 2700000); // Change the delay to 45 minutes (2700000 milliseconds)
