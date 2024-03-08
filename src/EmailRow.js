@@ -20,12 +20,12 @@ function EmailRow(props) {
         preview = preview + " ...";
     }
 
-    return <div id="preview-row">
-        <text id="sender">{props.sender}</text>
-        <text id="subject">{subject}</text>
-        <text id="preview">{preview}</text>
-        <text id='date'>{`${month} ${day} ${year}`}</text>
-    </div>;
+    return <tr>
+        <td id="sender">{props.sender}</td>
+        <td id="subject">{subject}</td>
+        <td id="preview">{preview}</td>
+        <td id='date'>{`${month} ${day} ${year}`}</td>
+    </tr>;
 }
 
 export default EmailRow;

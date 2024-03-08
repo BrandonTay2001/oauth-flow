@@ -7,7 +7,6 @@ import Protected from './Protected';
 import Emails from './Emails';
 import PageBar from './PageBar';
 import ContentBar from './ContentBar';
-// import $ from 'jquery';
 
 
 class App extends React.Component{
@@ -53,7 +52,7 @@ class App extends React.Component{
         <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
         
         {this.state.token !== "" && <ContentBar id="content-col" updateFolder={this.update} folder={this.state.folder} />}
-        {this.state.token !== "" && <Emails id="email-col"page={this.state.page} emails={this.state.emails} token={ this.state.token} />}
+        {this.state.token !== ""  && <Emails id="email-col"page={this.state.page} emails={this.state.emails} token={ this.state.token} />}
         {this.state.token !== "" && <PageBar id="page-bar" page={ this.state.page} updatePage={this.update} total_num={ this.state.total_num} />}
       </MsalProvider>
     )

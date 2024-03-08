@@ -3,14 +3,21 @@ import EmailRow from './EmailRow';
 
 function Emails(props) {
 
-    const emailRows = props.emails.map((e) => {
+    return <table>
 
-        const date = new Date(parseInt(e.time) * 1000);
-
-        return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={ date} />
-    });
-
-    return emailRows;
+        <tr>
+            <th>Sender</th>
+            <th>Subject</th>
+            <th>Preview</th>
+            <th>Date</th>
+        </tr>
+        {
+            props.emails.map((e) => {
+                let date = new Date(parseInt(e.time) * 1000);
+                return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} />
+            })
+        }
+    </table>
 }
 
 export default Emails;
