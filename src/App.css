@@ -5,8 +5,10 @@
   background-color: #F2E9E4;
 }
 
+
 body{
   background-color: #F2E9E4;
+  box-sizing: border-box;
 }
 
 #top-bar{
@@ -27,15 +29,31 @@ body{
   width: 50%;
   height: 50%;
 }
+
 #login-button{
   margin-top: 100%;
   justify-content: flex-end;
   background-color: #ffffff;
 }
 
-#content-col{
-  display:flexbox;
+#preview{
+  box-sizing: border-box;
 }
+
+.col-1{
+  width: 30%;
+  float: left;
+}
+
+.col-2{
+  width: 70%;
+  float: left;
+}
+
+#content-col{
+  display:grid;
+}
+
 #page-bar{
   justify-content:center;
 }

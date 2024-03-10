@@ -14,7 +14,8 @@ function Emails(props) {
         {
             props.emails.map((e) => {
                 let date = new Date(parseInt(e.time) * 1000);
-                return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} />
+                return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} onClick={() => {
+                    props.getOneEmail(e.id, props.token) }} />
             })
         }
     </table>

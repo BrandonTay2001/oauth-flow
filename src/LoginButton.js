@@ -34,8 +34,7 @@ function LoginButton(props) {
 
     let timer = setTimeout(() => {
       if (accounts.length === 0) {
-        props.updateLogin({ login: 0 });
-        props.updateToken({ token: "" });
+        props.update({ login: 0, token: "", emails: [], total_num: -1 });
       } else {
         props.updateLogin({ login: 1 });
         if (props.token !== "") {

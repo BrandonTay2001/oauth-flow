@@ -14,7 +14,7 @@ function EmailRow(props) {
         subject = subject + " ...";
     }
 
-    let preview = props.preview.substring(0, 100);
+    let preview = props.preview.substring(0, 90);
 
         if (props.preview !== preview) {
         preview = preview + " ...";

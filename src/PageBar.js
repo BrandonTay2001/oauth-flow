@@ -13,9 +13,9 @@ function PageBar(props) {
 
     return <div id="page-bar">
 
-        <img id="last-page" src={before} alt="before" onClick={() => props.updatePage({ page: last_page })} />
+        <img id="last-page" src={before} alt="before" onClick={() => props.updatePage(last_page, props.token)} />
         <p id="hint-page" >{(props.page - 1) * 50 + 1} - {(props.page - 1) * 50 + page_size} out of {props.total_num}</p>
-        <img id="next-page" src={next} alt="next" onClick={() => props.updatePage({ page: next_page })} />
+        <img id="next-page" src={next} alt="next" onClick={() => props.updatePage(next_page, props.token)} />
 
     </div>;
     
