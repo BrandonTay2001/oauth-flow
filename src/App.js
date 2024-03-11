@@ -5,6 +5,7 @@ import { MsalProvider } from "@azure/msal-react";
 import logo from "./image/logo.png";
 import Protected from './Protected';
 import Emails from './Emails';
+import OneEmail from './OneEmail';
 import PageBar from './PageBar';
 import ContentBar from './ContentBar';
 
@@ -13,13 +14,14 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: [] };
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {} };
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
     this.updateFolder = this.updateFolder.bind(this);
     this.getEmails = this.getEmails.bind(this);
     this.getOneEmail = this.getOneEmail.bind(this);
+    this.returnFromOneEmail = this.returnFromOneEmail.bind(this);
   };
 
   update(nextState) {
@@ -45,6 +47,10 @@ class App extends React.Component{
       this.update({ page: 1 });
       this.getEmailsByCategory(folder, 1, token);
     }
+  }
+
+  returnFromOneEmail() {
+    this.setState({ selected_email: -1, selected_content: {} });
   }
 
   getEmails(page, token) {
@@ -93,28 +99,42 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then((data) => {
-        this.update({selected_content: data.email})
+
+        let content = {};
+
+        content["from_address"] = data.email.sender.address;
+        content["from_name"] = data.email.sender.name;
+        content["body"] = data.email.body;
+        content["bcc"] = data.email.bcc;
+        content["cc"] = data.email.cc;
+        content["subject"] = data.email.subject;
+        this.update({ selected_content: content });
+
+        console.log(content);
       })
       .catch(error => {
         console.log(error);
     })
   }
 
+ 
+
   render() {
     return (
       <MsalProvider id="App" instance={this.props.msalInstance}>
           <div id='top-bar'>
-            <img src={logo} alt="logo" id="logo" />
+          <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail()} />
             <input type="text" id="searchString"/>
           <LoginButton id="login-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
         </div>
         <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
         
-        {this.state.token !== "" && <ContentBar class="col-1" id="content-col" updateFolder={this.updateFolder} folder={this.state.folder} token={this.state.token} />}
+        {this.state.token !== "" && this.state.selected_email === -1 && <ContentBar id="content-col" updateFolder={this.updateFolder} folder={this.state.folder} token={this.state.token} />}
 
-        {this.state.token !== "" && this.state.emails !== typeof undefined && <Emails class="col-2" id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={ this.getOneEmail} />}
+        {this.state.token !== "" && this.state.selected_email === -1 && this.state.emails !== typeof undefined && <Emails id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={this.getOneEmail} />}
         
-        {this.state.token !== "" && <PageBar id="page-bar" page={this.state.page} updatePage={this.updatePage} total_num={this.state.total_num} token={ this.state.token} />}
+        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email"email={this.state.selected_content} email_id={this.state.selected_email} go_back={ this.returnFromOneEmail} />}
+        {this.state.token !== "" && this.state.selected_email === -1 && <PageBar id="page-bar" page={this.state.page} updatePage={this.updatePage} total_num={this.state.total_num} token={ this.state.token} />}
       </MsalProvider>
     )
   };

@@ -15,15 +15,15 @@ function Emails(props) {
 
         <tbody>
             {
-            props.emails.map((e) => {
-                let date = new Date(parseInt(e.time) * 1000);
-                return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} getOneEmail={
-                    props.getOneEmail} email_id={e.id} token={props.token} />
-            })
+                props.emails.map((e) => {
+                    let date = new Date(parseInt(e.time) * 1000);
+                    return <EmailRow key={e.id} sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} getOneEmail={
+                        props.getOneEmail} email_id={e.id} token={props.token} />
+                })
             }
         </tbody>
 
-    </table>
+    </table>;
 }
 
 export default Emails;

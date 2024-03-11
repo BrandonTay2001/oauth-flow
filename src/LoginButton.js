@@ -27,6 +27,8 @@ function LoginButton(props) {
       account: accounts[0], // Assuming there is only one signed-in account
     };
 
+    props.update({emails: [], selected_email: -1, selected_content: {}, token: "", total_num: 0, login: 0, folder: 1, page: 1})
+
     instance.logoutPopup(logoutRequest);
   };
   

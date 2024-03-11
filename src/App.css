@@ -2,13 +2,11 @@
   text-align: center;
   height: 100%;
   width: 100%;
-  background-color: #F2E9E4;
 }
 
-
 body{
-  background-color: #F2E9E4;
   box-sizing: border-box;
+  background-color: #F2E9E4;
 }
 
 #top-bar{
@@ -33,21 +31,16 @@ body{
 #login-button{
   margin-top: 100%;
   justify-content: flex-end;
-  background-color: #ffffff;
 }
 
 #preview{
   box-sizing: border-box;
 }
 
-#content-col{
-  display:grid;
-}
-
-#email-col{
-  margin-right: auto;
-  margin-left: auto;
-}
 #page-bar{
   justify-content:center;
+}
+
+.table{
+  background-image: white;
 }
