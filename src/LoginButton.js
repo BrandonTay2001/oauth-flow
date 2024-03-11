@@ -36,7 +36,7 @@ function LoginButton(props) {
       if (accounts.length === 0) {
         props.update({ login: 0, token: "", emails: [], total_num: -1 });
       } else {
-        props.updateLogin({ login: 1 });
+        props.update({ login: 1 });
         if (props.token !== "") {
           props.getEmails(props.page, props.token);
         }

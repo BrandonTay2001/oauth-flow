@@ -20,7 +20,7 @@ function EmailRow(props) {
         preview = preview + " ...";
     }
 
-    return <tr>
+    return <tr onClick={()=>{props.getOneEmail(props.email_id, props.token) && console.log("CLICKED")}}>
         <td id="sender">{props.sender}</td>
         <td id="subject">{subject}</td>
         <td id="preview">{preview}</td>

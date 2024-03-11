@@ -4,20 +4,25 @@ import EmailRow from './EmailRow';
 function Emails(props) {
 
     return <table>
+        <thead>
+            <tr>
+                <th>Sender</th>
+                <th>Subject</th>
+                <th>Preview</th>
+                <th>Date</th>
+            </tr>
+        </thead>
 
-        <tr>
-            <th>Sender</th>
-            <th>Subject</th>
-            <th>Preview</th>
-            <th>Date</th>
-        </tr>
-        {
+        <tbody>
+            {
             props.emails.map((e) => {
                 let date = new Date(parseInt(e.time) * 1000);
-                return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} onClick={() => {
-                    props.getOneEmail(e.id, props.token) }} />
+                return <EmailRow sender={e.sender.name} subject={e.subject} preview={e.bodyPreview} date={date} getOneEmail={
+                    props.getOneEmail} email_id={e.id} token={props.token} />
             })
-        }
+            }
+        </tbody>
+
     </table>
 }
 

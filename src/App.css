@@ -40,20 +40,14 @@ body{
   box-sizing: border-box;
 }
 
-.col-1{
-  width: 30%;
-  float: left;
-}
-
-.col-2{
-  width: 70%;
-  float: left;
-}
-
 #content-col{
   display:grid;
 }
 
+#email-col{
+  margin-right: auto;
+  margin-left: auto;
+}
 #page-bar{
   justify-content:center;
 }

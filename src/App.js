@@ -13,7 +13,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1 };
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: [] };
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
@@ -67,7 +67,7 @@ class App extends React.Component{
   getEmailsByCategory(category, page, token) {
     fetch(`http://localhost:5000/emails/getByCategory?page=${page}&category=${category}`, {
       method: 'GET',
-      header: {
+      headers: {
         'Content-Type': 'application/json',
         'Access-Token': token
       }
@@ -86,14 +86,14 @@ class App extends React.Component{
 
     fetch('http://localhost:5000/emails/' + id, {
       method: 'GET',
-      header: {
+      headers: {
         'Content-Type': 'application/json',
         'Access-Token': token
       }
     })
       .then(response => response.json())
       .then((data) => {
-        console.log(data.emails);
+        this.update({selected_content: data.email})
       })
       .catch(error => {
         console.log(error);
