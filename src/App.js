@@ -104,6 +104,7 @@ class App extends React.Component{
 
         let content = {};
 
+        content["id"] = data.email.id;
         content["category"] = data.email.category;
         content["from_address"] = data.email.sender.address;
         content["from_name"] = data.email.sender.name;
@@ -126,11 +127,14 @@ class App extends React.Component{
         'Content-Type': 'application/json',
         'Access-Token': this.state.token
         },
-      body: {"newCategory": category}
+      body: JSON.stringify({"newCategory": category})
     })
       .then(response => response.json())
       .then((data) => {
         console.log(data);
+        let content = this.state.selected_content;
+        content["category"] = category;
+        this.setState({ selected_content: content });
       })
       .catch(error => {
         console.log(error);
