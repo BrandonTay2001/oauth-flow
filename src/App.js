@@ -140,11 +140,20 @@ class App extends React.Component{
   render() {
     return (
       <MsalProvider id="App" instance={this.props.msalInstance}>
-          <div id='top-bar'>
-          <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
-            <input type="text" id="searchString"/>
-          <LoginButton id="login-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
-        </div>
+        
+        {
+          this.state.token === "" && <div id='login-page'>
+            <img src={logo} alt='logo' id='login-logo' />
+            <LoginButton id='login-button' update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
+          </div>
+        }
+
+        {this.state.token !== "" && <div id='top-bar'>
+            <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
+             <input type="text" id="searchString"/>
+          <LoginButton id="logout-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
+        </div>}
+
         <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
         
         {this.state.token !== "" && this.state.selected_email === -1 && <ContentBar id="content-col" updateFolder={this.updateFolder} folder={this.state.folder} token={this.state.token} />}
