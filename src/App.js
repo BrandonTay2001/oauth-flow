@@ -22,6 +22,7 @@ class App extends React.Component{
     this.getEmails = this.getEmails.bind(this);
     this.getOneEmail = this.getOneEmail.bind(this);
     this.returnFromOneEmail = this.returnFromOneEmail.bind(this);
+    this.changeCategory = this.changeCategory.bind(this);
   };
 
   update(nextState) {
@@ -49,8 +50,8 @@ class App extends React.Component{
     }
   }
 
-  returnFromOneEmail() {
-    this.setState({ selected_email: -1, selected_content: {} });
+  returnFromOneEmail(folder) {
+    this.setState({ folder: folder, selected_email: -1, selected_content: {} });
   }
 
   getEmails(page, token) {
@@ -64,6 +65,7 @@ class App extends React.Component{
       .then(response => response.json())
       .then((data) => {
         this.update({ emails: data.emails, total_num: data.totalEmails });
+        console.log(data.emails);
       })
     .catch(error => {
       console.log(error);
@@ -102,28 +104,44 @@ class App extends React.Component{
 
         let content = {};
 
+        content["category"] = data.email.category;
         content["from_address"] = data.email.sender.address;
         content["from_name"] = data.email.sender.name;
         content["body"] = data.email.body;
         content["bcc"] = data.email.bcc;
         content["cc"] = data.email.cc;
-        content["subject"] = data.email.subject;
+        content["subject"] = data.email.subject;  
         this.update({ selected_content: content });
 
-        console.log(content);
       })
       .catch(error => {
         console.log(error);
     })
   }
 
- 
+  changeCategory( id, category) {
+      fetch("http://localhost:5000/emails/changeCategory/" + id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': this.state.token
+        },
+      body: {"newCategory": category}
+    })
+      .then(response => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.log(error);
+    })
+  }
 
   render() {
     return (
       <MsalProvider id="App" instance={this.props.msalInstance}>
           <div id='top-bar'>
-          <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail()} />
+          <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
             <input type="text" id="searchString"/>
           <LoginButton id="login-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
         </div>
@@ -133,7 +151,7 @@ class App extends React.Component{
 
         {this.state.token !== "" && this.state.selected_email === -1 && this.state.emails !== typeof undefined && <Emails id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={this.getOneEmail} />}
         
-        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email"email={this.state.selected_content} email_id={this.state.selected_email} go_back={ this.returnFromOneEmail} />}
+        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={ this.changeCategory} />}
         {this.state.token !== "" && this.state.selected_email === -1 && <PageBar id="page-bar" page={this.state.page} updatePage={this.updatePage} total_num={this.state.total_num} token={ this.state.token} />}
       </MsalProvider>
     )

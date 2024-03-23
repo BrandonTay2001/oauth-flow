@@ -10,6 +10,9 @@
     height: 2.5%;
 }
 
+#email-category{
+    background-color: rgb(255, 255, 255, 70%);
+}
 #email-subject{
     background-color: rgb(255,255,255,70%);
 }
