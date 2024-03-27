@@ -14,7 +14,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {} };
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, clicked_time: 0 };
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
@@ -51,7 +51,23 @@ class App extends React.Component{
   }
 
   returnFromOneEmail(folder) {
-    this.setState({ folder: folder, selected_email: -1, selected_content: {} });
+    let time_spent = Math.round((Date.now() - this.state.clicked_time) / 1000);
+
+    fetch('http://localhost:5000/metrics/recordTime/' + this.state.selected_email, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': this.state.token
+      },
+      body: JSON.stringify({"timeSpent": time_spent})
+    })
+      .then(response => response.json())
+      .then(() => {
+      this.setState({ folder: folder, selected_email: -1, selected_content: {}, clicked_time: 0});
+      })
+      .catch(error => {
+        console.log(error);
+    })
   }
 
   getEmails(page, token) {
@@ -111,7 +127,7 @@ class App extends React.Component{
         content["bcc"] = data.email.bcc;
         content["cc"] = data.email.cc;
         content["subject"] = data.email.subject;  
-        this.update({ selected_content: content });
+        this.update({ selected_content: content, clicked_time: Date.now()});
 
       })
       .catch(error => {
@@ -126,7 +142,7 @@ class App extends React.Component{
         'Content-Type': 'application/json',
         'Access-Token': this.state.token
         },
-      body: {"newCategory": category}
+      body: JSON.stringify({"newCategory": category})
     })
       .then(response => response.json())
       .then((data) => {

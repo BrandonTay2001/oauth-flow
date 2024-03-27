@@ -25,7 +25,7 @@ function OneEmail(props) {
 
 
     return <div id="one-email">
-        <img src={back} alt="return-img" id="return-img" onClick={() => props.go_back()} />
+        <img src={back} alt="return-img" id="return-img" onClick={() => props.go_back(props.email.category)} />
         {structure}
         
     </div>;
