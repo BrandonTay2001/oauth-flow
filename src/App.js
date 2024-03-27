@@ -14,7 +14,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {} };
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, time_count: 0};
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
