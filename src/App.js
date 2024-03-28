@@ -124,6 +124,7 @@ class App extends React.Component{
 
         let content = {};
 
+        content["id"] = data.email.id;
         content["category"] = data.email.category;
         content["from_address"] = data.email.sender.address;
         content["from_name"] = data.email.sender.name;
@@ -151,6 +152,9 @@ class App extends React.Component{
       .then(response => response.json())
       .then((data) => {
         console.log(data);
+        let content = this.state.selected_content;
+        content["category"] = category;
+        this.setState({ selected_content: content });
       })
       .catch(error => {
         console.log(error);
@@ -160,11 +164,20 @@ class App extends React.Component{
   render() {
     return (
       <MsalProvider id="App" instance={this.props.msalInstance}>
-          <div id='top-bar'>
-          <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
-            <input type="text" id="searchString"/>
-          <LoginButton id="login-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
-        </div>
+        
+        {
+          this.state.token === "" && <div id='login-page'>
+            <img src={logo} alt='logo' id='login-logo' />
+            <LoginButton id='login-button' update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
+          </div>
+        }
+
+        {this.state.token !== "" && <div id='top-bar'>
+            <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
+             <input type="text" id="searchString"/>
+          <LoginButton id="logout-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
+        </div>}
+
         <Protected updateToken={this.update} getEmails={this.getEmails} page={this.state.page} />
         
         {this.state.token !== "" && this.state.selected_email === -1 && <ContentBar id="content-col" updateFolder={this.updateFolder} folder={this.state.folder} token={this.state.token} />}
