@@ -14,7 +14,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, clicked_time: 0 };
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {},selected_category: "", clicked_time: 0 };
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
@@ -98,7 +98,11 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then((data) => {
-        this.update({ emails: data.emails, total_num: data.totalEmails, folder: category });
+        if (data.emails !== typeof undefined) {
+          this.update({ emails: data.emails, total_num: data.totalEmails, folder: category });
+        } else {
+          this.update({total_num: 0, folder: category });
+        }
       })
       .catch(error => {
         console.log(error);
@@ -127,7 +131,7 @@ class App extends React.Component{
         content["bcc"] = data.email.bcc;
         content["cc"] = data.email.cc;
         content["subject"] = data.email.subject;  
-        this.update({ selected_content: content, clicked_time: Date.now()});
+        this.update({ selected_content: content,selected_category: data.email.category, clicked_time: Date.now()});
 
       })
       .catch(error => {
@@ -167,7 +171,7 @@ class App extends React.Component{
 
         {this.state.token !== "" && this.state.selected_email === -1 && this.state.emails !== typeof undefined && <Emails id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={this.getOneEmail} />}
         
-        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={ this.changeCategory} />}
+        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={this.changeCategory} selected_category={this.state.selected_category} update={this.update} />}
         {this.state.token !== "" && this.state.selected_email === -1 && <PageBar id="page-bar" page={this.state.page} updatePage={this.updatePage} total_num={this.state.total_num} token={ this.state.token} />}
       </MsalProvider>
     )

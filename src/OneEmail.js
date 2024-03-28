@@ -2,10 +2,10 @@ import './OneEmail.css';
 import back from './image/before.png';
 
 function OneEmail(props) {
-    let category = { 0: "Unsorted", 1: "Most Important", 2: "Less Important", 3: "Least Important" };
+    let category = { 0: "Unsorted", 1: "Most Important", 2: "Less Important", 3: "Least Important", 4: "White-List"};
     
     let dropdown = 
-    <select name="selectCategory" value={props.email.category} onChange={(e) => props.change_category(props.email_id, e.target.value)}>
+        <select name="selectCategory" value={props.selected_category} onChange={(e) => { props.update({selected_category: e.target.value}); props.change_category(props.email_id, e.target.value); }}>
         {Object.keys(category).map((key) => (
             <option key={key} value={key}>{category[key]}</option>
         ))}
