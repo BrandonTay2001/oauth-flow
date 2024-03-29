@@ -3,6 +3,7 @@
     justify-content: flex-end;
     display:flexbox;
     flex-direction: column;
+    overflow: scroll;
 }
 
 #close-logo {
@@ -12,13 +13,13 @@
 }
 
 #message-type{
-    width: 80%;
+    width: 70%;
     height: 10%;
 }
 
 #message-record{
     width: 80%;
-    height: 65%;
+    height: 75%;
 }
 
 .past-message {
@@ -28,9 +29,18 @@
     border-radius: 5px;
 }
 
+.system-response {
+    background-color: rgb(3242,233,228, 0.9);
+    margin-bottom: 2px;
+    padding: 5px;
+    border-radius: 5px;
+    color: #4a4e69;
+}
+
 #message-box {
     width: 80%;
     height: 7%;
+    margin-top: auto;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -43,6 +53,6 @@
     width: 30px;
     height: 30px;
     align-self: flex-end;
-    padding-bottom: 1%;
     opacity: 0.8;
+    margin-top: auto;
 }

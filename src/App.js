@@ -179,16 +179,12 @@ class App extends React.Component{
 
     if (this.state.selected_chat_type === '0') {
       whiteList.push(message);
-      type = 'White-List: ';
+      type = 'White-List';
     } else if (this.state.selected_chat_type === '1'){
       prefList.push(message);
-      type = 'Preference: ';
+      type = 'Preference';
     }
 
-    let new_msg_list = this.state.message_list;
-    new_msg_list.push(type + message);
-
-    this.update({ message_list: new_msg_list });
     
     fetch('http://localhost:5000/pref/updatePreferences', {
       method: 'POST',
@@ -196,11 +192,15 @@ class App extends React.Component{
         'Content-Type': 'application/json',
         'Access-Token': this.state.token
       }, 
-      body: JSON.stringify({ 'whiteList': whiteList, 'prefList': prefList})
+      body: JSON.stringify({ 'whitelist': whiteList, 'prefList': prefList})
     })
       .then(response => response.json())
       .then((data) => {
-
+        let new_msg_list = this.state.message_list;
+        new_msg_list.push(type +': ' + message);
+        new_msg_list.push(type + ' is updated')
+        
+        this.update({ message_list: new_msg_list });
         console.log(data);
       }).catch(error => {
         console.log(error);

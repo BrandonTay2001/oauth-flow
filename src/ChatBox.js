@@ -13,6 +13,17 @@ function ChatBox(props) {
             messageBox.value = ''; 
         }
     };
+    
+    let msg_record = [];
+
+    for (let i = 0; i < props.message_list.length; i++) {
+        if (i % 2 === 0) {
+            msg_record.push(<p key={i} className='past-message'>{props.message_list[i]}</p>);
+        } else {
+            msg_record.push(<p key={i} className='system-response'>{props.message_list[i]}</p>);
+        }
+    }
+    
     return <div id="chat-box">
 
         <div id='top-row'>
@@ -25,9 +36,7 @@ function ChatBox(props) {
         </div>
 
         <div id='message-record'>
-            {props.message_list.map((e, index) => {
-                return <p key={index} className='past-message'>{e}</p>;
-            })}
+            {msg_record}
         </div>
 
         <input type='text' id='message-box' ref={messageBoxRef}/>
