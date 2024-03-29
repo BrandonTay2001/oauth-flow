@@ -184,7 +184,9 @@ class App extends React.Component{
       prefList.push(message);
       type = 'Preference';
     }
-
+    let new_msg_list = this.state.message_list;
+    new_msg_list.push(type + ': ' + message);
+    this.update({ message_list: new_msg_list });
     
     fetch('http://localhost:5000/pref/updatePreferences', {
       method: 'POST',
@@ -196,14 +198,16 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then((data) => {
-        let new_msg_list = this.state.message_list;
-        new_msg_list.push(type +': ' + message);
         new_msg_list.push(type + ' is updated')
         
         this.update({ message_list: new_msg_list });
         console.log(data);
       }).catch(error => {
         console.log(error);
+        new_msg_list.push('Please try again later')
+        this.update({
+          message_list: new_msg_list
+        });
     })
   }
 
