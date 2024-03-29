@@ -9,10 +9,9 @@ function OneEmail(props) {
         {Object.keys(category).map((key) => (
             <option key={key} value={key}>{category[key]}</option>
         ))}
-    </select>
-
-    let structure = [ dropdown, <p id="email-subject">{props.email.subject}</p>];
-    console.log(props.email);
+        </select>
+    
+    let structure = [ dropdown, <button onClick={() => props.get_summary()}>Get Summary</button>,<p id="email-subject">{props.email.subject}</p>];
 
     if (props.email.from_address === props.email.from_name){
         structure.push(<p id="from">From: {props.email.from_address}</p>);
@@ -21,8 +20,6 @@ function OneEmail(props) {
     }
 
     structure.push(<p id="email-body" dangerouslySetInnerHTML={{ __html: props.email.body }} />);
-
-
 
     return <div id="one-email">
         <img src={back} alt="return-img" id="return-img" onClick={() => props.go_back(props.email.category)} />
