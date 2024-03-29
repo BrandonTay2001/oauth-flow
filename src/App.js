@@ -3,18 +3,20 @@ import React from 'react';
 import LoginButton from './LoginButton';
 import { MsalProvider } from "@azure/msal-react";
 import logo from "./image/logo.png";
+import chat from './image/chat.png';
 import Protected from './Protected';
 import Emails from './Emails';
 import OneEmail from './OneEmail';
 import PageBar from './PageBar';
 import ContentBar from './ContentBar';
+import ChatBox from './ChatBox';
 
 
 class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {},selected_category: "", clicked_time: 0 };
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {},selected_category: "", clicked_time: 0, selected_chat: false, message_list: [], selected_chat_type: '0'};
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
@@ -23,6 +25,7 @@ class App extends React.Component{
     this.getOneEmail = this.getOneEmail.bind(this);
     this.returnFromOneEmail = this.returnFromOneEmail.bind(this);
     this.changeCategory = this.changeCategory.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
   };
 
   update(nextState) {
@@ -63,7 +66,7 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then(() => {
-      this.setState({ folder: folder, selected_email: -1, selected_content: {}, clicked_time: 0});
+      this.setState({ folder: folder, selected_email: -1, selected_content: {}, clicked_time: 0, selected_chat: false});
       })
       .catch(error => {
         console.log(error);
@@ -80,7 +83,14 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then((data) => {
-        this.update({ emails: data.emails, total_num: data.totalEmails });
+
+        if (data.emails === typeof undefined) {
+          this.update({ emails: [], total_num: 0 });
+        }
+        else {
+          this.update({ emails: data.emails, total_num: data.totalEmails });
+        }
+
         console.log(data.emails);
       })
     .catch(error => {
@@ -101,7 +111,7 @@ class App extends React.Component{
         if (data.emails !== typeof undefined) {
           this.update({ emails: data.emails, total_num: data.totalEmails, folder: category });
         } else {
-          this.update({total_num: 0, folder: category });
+          this.update({emails: [], total_num: 0, folder: category });
         }
       })
       .catch(error => {
@@ -161,6 +171,42 @@ class App extends React.Component{
     })
   }
 
+  sendMessage(message) {
+
+    let whiteList = [];
+    let prefList = [];
+    let type = '';
+
+    if (this.state.selected_chat_type === '0') {
+      whiteList.push(message);
+      type = 'White-List: ';
+    } else if (this.state.selected_chat_type === '1'){
+      prefList.push(message);
+      type = 'Preference: ';
+    }
+
+    let new_msg_list = this.state.message_list;
+    new_msg_list.push(type + message);
+
+    this.update({ message_list: new_msg_list });
+    
+    fetch('http://localhost:5000/pref/updatePreferences', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': this.state.token
+      }, 
+      body: JSON.stringify({ 'whiteList': whiteList, 'prefList': prefList})
+    })
+      .then(response => response.json())
+      .then((data) => {
+
+        console.log(data);
+      }).catch(error => {
+        console.log(error);
+    })
+  }
+
   render() {
     return (
       <MsalProvider id="App" instance={this.props.msalInstance}>
@@ -185,6 +231,11 @@ class App extends React.Component{
         {this.state.token !== "" && this.state.selected_email === -1 && this.state.emails !== typeof undefined && <Emails id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={this.getOneEmail} />}
         
         {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={this.changeCategory} selected_category={this.state.selected_category} update={this.update} />}
+        
+        
+        {this.state.token !== "" && this.state.selected_chat === false && <img src={chat} alt='chatbox' id='chat' onClick={()=>this.update({selected_chat: true})}/>}
+        {this.state.token !== "" && this.state.selected_chat === true && <ChatBox id="chatbox" update={this.update} send_message={this.sendMessage} chat_type={this.state.selected_chat_type} message_list={ this.state.message_list} />}
+        
         {this.state.token !== "" && this.state.selected_email === -1 && <PageBar id="page-bar" page={this.state.page} updatePage={this.updatePage} total_num={this.state.total_num} token={ this.state.token} />}
       </MsalProvider>
     )

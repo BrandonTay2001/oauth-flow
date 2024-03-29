@@ -51,9 +51,31 @@ body{
 }
 
 #email-col{
-  margin: 0 auto;
-  flex-direction: column;
+  z-index: 1;
 }
+
+#chat {
+  width: 5%;
+  position:fixed;
+  bottom: 8%;
+  right: 2%;
+}
+
+#chat-box {
+  position: fixed;
+  bottom: 50px;
+  right: 20px;
+  width: 350px;
+  height: 300px;
+  z-index: 99;
+  overflow: scroll;
+  background-size: cover;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
 #page-bar{
   justify-content:center;
 }
