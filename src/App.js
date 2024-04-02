@@ -30,6 +30,7 @@ class App extends React.Component{
     this.getEmailSummary = this.getEmailSummary.bind(this);
   };
 
+  
   update(nextState) {
     this.setState(nextState);
   }
@@ -228,6 +229,35 @@ class App extends React.Component{
     })
   }
 
+  searchKeywords() {
+    fetch('http://localhost:5000/emails/smartSearch', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': this.state.token
+      },
+      body: JSON.stringify({ searchString: document.getElementById('searchString').value })
+    })
+      .then(response => response.json())
+      .then(data => {
+
+        if (data.emails === undefined || data.emails === typeof undefined) {
+          this.update({emails: [], total_num: 0})
+        } else {
+          this.update({ emails: data.emails, total_num: data.totalEmails})
+        }
+      })
+      .catch(error => {
+        console.log(error);
+    })
+  }
+
+  handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.searchKeywords();
+      e.target.value = '';
+    }
+  }
   render() {
     return (
       <MsalProvider id="App" instance={this.props.msalInstance}>
@@ -241,7 +271,7 @@ class App extends React.Component{
 
         {this.state.token !== "" && <div id='top-bar'>
             <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
-             <input type="text" id="searchString"/>
+             <input type="text" id="searchString" onKeyDown={this.handleKeyDown}/>
           <LoginButton id="logout-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
         </div>}
 
