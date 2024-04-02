@@ -50,6 +50,22 @@ body{
   box-sizing: border-box;
 }
 
+#daily-summary-box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color:rgb(74,78,105, 0.9);
+  color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  z-index: 9999;
+  width: 400px;
+  height:150px;
+  overflow: scroll;
+}
+
 #email-col{
   z-index: 1;
 }

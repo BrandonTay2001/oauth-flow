@@ -11,13 +11,13 @@ import PageBar from './PageBar';
 import ContentBar from './ContentBar';
 import ChatBox from './ChatBox';
 import SummaryBox from './SummaryBox';
-
+import DailySummary from './DailySummary';
 
 class App extends React.Component{
   constructor(props) {
     super(props);
 
-    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, selected_category: "", selected_email_summary: '', clicked_time: 0, selected_chat: false, message_list: [], selected_chat_type: '0'};
+    this.state = { login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, selected_category: "", selected_email_summary: '', clicked_time: 0, selected_chat: false, message_list: [], selected_chat_type: '0', daily_summary: [], daily_page: 0};
     
     this.update = this.update.bind(this);
     this.updatePage = this.updatePage.bind(this);
@@ -28,6 +28,7 @@ class App extends React.Component{
     this.changeCategory = this.changeCategory.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.getEmailSummary = this.getEmailSummary.bind(this);
+    this.getDailySummary = this.getDailySummary.bind(this);
   };
 
   
@@ -143,7 +144,7 @@ class App extends React.Component{
         content["bcc"] = data.email.bcc;
         content["cc"] = data.email.cc;
         content["subject"] = data.email.subject;  
-        this.update({ selected_content: content,selected_category: data.email.category, clicked_time: Date.now()});
+        this.update({ selected_content: content, selected_category: data.email.category, clicked_time: Date.now(), message_list: [], selected_email_summary: '', daily_page: 0} );
 
       })
       .catch(error => {
@@ -229,6 +230,24 @@ class App extends React.Component{
     })
   }
 
+  getDailySummary() {
+    fetch('http://localhost:5000/emails/dailySummary', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': this.state.token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.summary);
+        this.update({ daily_summary: data.summary, daily_page: 1});
+      })
+      .catch(error => {
+        console.log(error);
+    })
+  }
+
   searchKeywords() {
     fetch('http://localhost:5000/emails/smartSearch', {
       method: 'POST',
@@ -252,6 +271,7 @@ class App extends React.Component{
     })
   }
 
+  
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       this.searchKeywords();
@@ -270,8 +290,11 @@ class App extends React.Component{
         }
 
         {this.state.token !== "" && <div id='top-bar'>
-            <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
-             <input type="text" id="searchString" onKeyDown={this.handleKeyDown}/>
+          <img src={logo} alt="logo" id="logo" onClick={ ()=>this.returnFromOneEmail(0)} />
+          <input type="text" id="searchString" onKeyDown={this.handleKeyDown} />
+
+          <button id='daily-summary-button' onClick={()=>this.getDailySummary()}>Get Daily Feed</button>
+          
           <LoginButton id="logout-button" update={this.update} getEmails={this.getEmails} token={this.state.token} page={this.state.page} />
         </div>}
 
@@ -282,8 +305,11 @@ class App extends React.Component{
         {this.state.token !== "" && this.state.selected_email === -1 && this.state.emails !== typeof undefined && <Emails id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={this.getOneEmail} />}
         
         {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={this.changeCategory} selected_category={this.state.selected_category} update={this.update} get_summary={this.getEmailSummary} summary={ this.state.selected_email_summary} />}
-        {this.state.selected_email_summary !== "" && <SummaryBox id='summary'update={this.update} summary={ this.state.selected_email_summary} />}
+        {this.state.token !== '' && this.state.selected_email_summary.length > 0 && <SummaryBox id='summary' update={this.update} summary={this.state.selected_email_summary}/>}
         
+
+        {this.state.token !== '' && this.state.daily_page !== 0 && this.state.daily_summary.length > 0 && <DailySummary id='daily-summary' summary={this.state.daily_summary} page={this.state.daily_page} update={ this.update} />}
+
         {this.state.token !== "" && this.state.selected_chat === false && <img src={chat} alt='chatbox' id='chat' onClick={()=>this.update({selected_chat: true})}/>}
         {this.state.token !== "" && this.state.selected_chat === true && <ChatBox id="chatbox" update={this.update} send_message={this.sendMessage} chat_type={this.state.selected_chat_type} message_list={ this.state.message_list} />}
         

@@ -1,0 +1,30 @@
+#daily-summary-box {
+    justify-content: flex-end;
+    display: flexbox;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+#close-img {
+    cursor: pointer;
+    width: 20px;
+    height: auto;
+    opacity: 0.8;
+}
+
+#last-img{
+    width: 20px;
+    height: auto;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+
+}
+
+#next-img{
+    width: 20px;
+    height: auto;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+}
