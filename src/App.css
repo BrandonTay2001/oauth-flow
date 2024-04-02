@@ -21,6 +21,12 @@ body{
   margin-bottom: 20px;
 }
 
+#daily-summary-button{
+  height: min-content;
+  justify-content: flex-end;
+  margin-top: 3%;
+}
+
 #top-bar{
   display: flex;
   justify-content: space-around;
@@ -42,8 +48,9 @@ body{
 }
 
 #login-button{
-  margin-top: 100%;
+  height: min-content;
   justify-content: flex-end;
+  margin-top: 90%;
 }
 
 #preview{
