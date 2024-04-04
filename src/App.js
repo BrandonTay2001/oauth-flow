@@ -185,6 +185,9 @@ class App extends React.Component{
     } else if (this.state.selected_chat_type === '1'){
       prefList.push(message);
       type = 'Preference';
+    } else if (this.state.selected_chat_type === '2') {
+      this.smartSearch(message);
+      return;
     }
     let new_msg_list = this.state.message_list;
     new_msg_list.push(type + ': ' + message);
@@ -249,22 +252,53 @@ class App extends React.Component{
   }
 
   searchKeywords() {
-    fetch('http://localhost:5000/emails/smartSearch', {
-      method: 'POST',
+    let search = document.getElementById('searchString').value;
+
+    if (search.length === 0 || search === undefined || search === typeof undefined) {
+      return;
+    }
+
+    fetch('http://localhost:5000/emails/search?searchString='+search, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Access-Token': this.state.token
       },
-      body: JSON.stringify({ searchString: document.getElementById('searchString').value })
     })
       .then(response => response.json())
       .then(data => {
 
         if (data.emails === undefined || data.emails === typeof undefined) {
-          this.update({emails: [], total_num: 0})
+          this.update({ emails: [], total_num: 0, selected_email: -1, selected_content: {}  });
         } else {
-          this.update({ emails: data.emails, total_num: data.totalEmails})
+          this.update({ emails: data.emails, total_num: data.totalEmails, selected_email: -1, selected_content: {} });
         }
+      })
+      .catch(error => {
+        console.log(error);
+    })
+  }
+
+  smartSearch(message) {
+    
+    if (message.length === 0 || message === undefined || message === typeof undefined) {
+      return;
+    }
+
+    fetch('http://localhost:5000/emails/smartSearch?searchString=' + message, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Token': this.state.token
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.emails === undefined || data.emails === typeof undefined) {
+        this.update({emails: [], total_num: 0,selected_email: -1, selected_content: {} })
+        } else {
+          this.update({ emails: data.emails, total_num: data.totalEmails, selected_email: -1, selected_content: {} });
+      }
       })
       .catch(error => {
         console.log(error);
@@ -308,7 +342,7 @@ class App extends React.Component{
         {this.state.token !== '' && this.state.selected_email_summary.length > 0 && <SummaryBox id='summary' update={this.update} summary={this.state.selected_email_summary}/>}
         
 
-        {this.state.token !== '' && this.state.daily_page !== 0 && this.state.daily_summary.length > 0 && <DailySummary id='daily-summary' summary={this.state.daily_summary} page={this.state.daily_page} update={ this.update} />}
+        {this.state.token !== '' && this.state.daily_page !== 0 && this.state.daily_summary.length > 0 && <DailySummary id='daily-summary-box' summary={this.state.daily_summary} page={this.state.daily_page} update={ this.update} />}
 
         {this.state.token !== "" && this.state.selected_chat === false && <img src={chat} alt='chatbox' id='chat' onClick={()=>this.update({selected_chat: true})}/>}
         {this.state.token !== "" && this.state.selected_chat === true && <ChatBox id="chatbox" update={this.update} send_message={this.sendMessage} chat_type={this.state.selected_chat_type} message_list={ this.state.message_list} />}

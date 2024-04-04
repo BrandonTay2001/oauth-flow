@@ -41,9 +41,15 @@ body{
   height: 50%;
 }
 
+#daily-summary-button{
+  margin-top: 3%;
+  height: min-content;
+}
+
 #login-button{
-  margin-top: 100%;
+  margin-top: 90%;
   justify-content: flex-end;
+  border-radius: 5%;
 }
 
 #preview{

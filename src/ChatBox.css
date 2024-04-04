@@ -15,11 +15,13 @@
 #message-type{
     width: 70%;
     height: 10%;
+    color: black;
 }
 
 #message-record{
     width: 80%;
     height: 75%;
+    color: white;
 }
 
 .past-message {
@@ -38,21 +40,18 @@
 }
 
 #message-box {
-    width: 80%;
-    height: 7%;
-    margin-top: auto;
+    width: 290px;
+    height: 6%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-right: 10px;
-    align-self: flex-end;
 }
 
 #send-logo {
     cursor: pointer;
     width: 30px;
     height: 30px;
-    align-self: flex-end;
     opacity: 0.8;
-    margin-top: auto;
+    align-self: flex-end;
 }

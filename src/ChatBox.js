@@ -31,7 +31,8 @@ function ChatBox(props) {
         
             <select id='message-type' name="messageType" value={ props.chat_type} onChange={(e)=>props.update({selected_chat_type: e.target.value})}>
                 <option key={ 0} value='0' >White-List</option>
-                <option key={1} value='1'> Preference</option>
+                <option key={1} value='1'>Preference</option>
+                <option key={2} value='2'>Smart Search</option>
             </select>
         </div>
 
