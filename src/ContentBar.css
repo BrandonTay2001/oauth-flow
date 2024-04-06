@@ -1,0 +1,39 @@
+.unclicked{
+    font-weight: 700;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: #c9ada7;
+    color: white;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.clicked{
+    font-weight: 700;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: #4a4e69;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+}
+
+#inbox{
+    margin-left: 5%;
+}
+
+#most{
+    margin-left: 20px;
+}
+
+#less{
+    margin-left: 20px;
+}
+
+#least{
+    margin-left: 20px;
+}
+
+#white{
+    margin-left: 20px;
+}

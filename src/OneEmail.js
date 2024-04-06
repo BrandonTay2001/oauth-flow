@@ -11,7 +11,7 @@ function OneEmail(props) {
         ))}
         </select>
     
-    let structure = [ dropdown, <button onClick={() => props.get_summary()}>Get Summary</button>,<p id="email-subject">{props.email.subject}</p>];
+    let structure = [ dropdown, <button id='summary-button' onClick={() => props.get_summary()}>Get Summary</button>,<p id="email-subject">{props.email.subject}</p>];
 
     if (props.email.from_address === props.email.from_name){
         structure.push(<p id="from">From: {props.email.from_address}</p>);

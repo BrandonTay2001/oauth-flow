@@ -1,3 +1,5 @@
+@tailwind App;
+
 .App {
   text-align: center;
   height: 100%;
@@ -9,6 +11,8 @@ body{
   background-color: #F2E9E4;
 }
 
+@tailwind login-page;
+
 #login-page {
   display: flex;
   flex-direction: column;
@@ -18,13 +22,7 @@ body{
 }
 
 #login-logo {
-  margin-bottom: 25px;
-}
-
-#daily-summary-button{
-  height: min-content;
-  justify-content: flex-end;
-  margin-top: 3%;
+  margin-bottom: 20px;
 }
 
 #top-bar{
@@ -39,57 +37,24 @@ body{
   width: 5%;
   float: left;
   display: inline;
-  cursor: pointer;
 }
 
 #searchString{
   margin-top: 3%;
   width: 50%;
-  height: 30px;
-  border-radius: 3px;
-  padding-left: 1%;
-}
-
-#daily-summary-button{
-  margin-top: 2.5%;
-  width: 130px;
-  height: 40px;
-  background-color: #c9ada7;
-  color: white;
-  font-weight: 700;
-  border-radius: 5px;
+  height: 50%;
 }
 
 #login-button{
-  margin-top: 46%;
+  margin-top: 100%;
   justify-content: flex-end;
-  border-radius: 5px;
-  font-weight: 700;
-  color: white;
-  background-color: #4a4e69;
-  width: 90px;
-  height: 40px;
 }
 
 #preview{
   box-sizing: border-box;
 }
 
-#daily-summary-box {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color:rgb(74,78,105, 0.9);
-  color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  z-index: 9999;
-  width: 400px;
-  height:200px;
-  overflow: scroll;
-}
+@tailwind email-col;
 
 #email-col{
   z-index: 1;
@@ -100,7 +65,7 @@ body{
 }
 
 #chat {
-  width: 4%;
+  width: 5%;
   position:fixed;
   bottom: 8%;
   right: 2%;
@@ -135,4 +100,9 @@ body{
 
 #page-bar{
   justify-content:center;
+}
+
+.table {
+  margin: 0 auto;
+  text-align: left;
 }

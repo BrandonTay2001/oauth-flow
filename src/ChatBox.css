@@ -15,44 +15,38 @@
 #message-type{
     width: 70%;
     height: 10%;
+    color: black;
 }
 
 #message-record{
     width: 80%;
     height: 75%;
+    color: white;
 }
 
 .past-message {
     background-color: #4a4e69;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    margin-top: 6px;
     padding: 5px;
     border-radius: 5px;
 }
 
 .system-response {
     background-color: rgb(3242,233,228, 0.9);
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    margin-top: 6px;
     padding: 5px;
     border-radius: 5px;
     color: #4a4e69;
 }
 
 #message-box {
-    width: 80%;
+    width: 330px;
     height: 7%;
-    margin-top: auto;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-right: 10px;
-    align-self: flex-end;
-}
-
-#send-logo {
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    align-self: flex-end;
-    opacity: 0.8;
-    margin-top: auto;
+    color: black;
 }
