@@ -20,11 +20,11 @@ function EmailRow(props) {
         preview = preview + " ...";
         }
 
-    return <tr onClick={()=>{props.getOneEmail(props.email_id, props.token)}}>
-        <td id="sender">{props.sender}</td>
-        <td id="subject">{subject}</td>
-        <td id="preview">{preview}</td>
-        <td id='date'>{`${month} ${day} ${year}`}</td>
+    return <tr className="border-b dark:border-neutral-500" onClick={()=>{props.getOneEmail(props.email_id, props.token)}}>
+        <td className="whitespace-nowrap px-6 py-4 font-medium" id="sender">{props.sender}</td>
+        <td className="whitespace-nowrap px-6 py-4" id="subject">{subject}</td>
+        <td className="whitespace-nowrap px-6 py-4" id="preview">{preview}</td>
+        <td className="whitespace-nowrap px-6 py-4" id='date'>{`${month} ${day} ${year}`}</td>
     </tr>;
 }
 
