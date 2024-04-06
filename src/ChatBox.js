@@ -1,6 +1,5 @@
 import './ChatBox.css';
 import close from './image/close.png';
-import send from './image/send.png';
 import React, { useRef } from 'react';
 
 function ChatBox(props) {
@@ -8,11 +7,20 @@ function ChatBox(props) {
 
     const handleSendClick = () => {
         const messageBox = messageBoxRef.current;
-        props.send_message(messageBox.value);
-        if (messageBox) {
-            messageBox.value = ''; 
+
+        if (messageBox.value !== '' || messageBox.value !== undefined || messageBox.value !== typeof undefined) {
+            props.send_message(messageBox.value);
+            if (messageBox) {
+                messageBox.value = ''; 
+            }
         }
     };
+
+    const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+        handleSendClick();
+    }
+  }
     
     let msg_record = [];
 
@@ -40,8 +48,7 @@ function ChatBox(props) {
             {msg_record}
         </div>
 
-        <input type='text' id='message-box' ref={messageBoxRef}/>
-        <img src={send} alt='send-logo' id='send-logo' onClick={handleSendClick} />
+        <input type='text' id='message-box' ref={messageBoxRef} onKeyDown={handleKeyDown}/>
     </div>;
 }
 export default ChatBox;

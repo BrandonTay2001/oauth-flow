@@ -26,32 +26,27 @@
 
 .past-message {
     background-color: #4a4e69;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    margin-top: 6px;
     padding: 5px;
     border-radius: 5px;
 }
 
 .system-response {
     background-color: rgb(3242,233,228, 0.9);
-    margin-bottom: 2px;
+    margin-bottom: 6px;
+    margin-top: 6px;
     padding: 5px;
     border-radius: 5px;
     color: #4a4e69;
 }
 
 #message-box {
-    width: 290px;
-    height: 6%;
+    width: 330px;
+    height: 7%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-right: 10px;
-}
-
-#send-logo {
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    opacity: 0.8;
-    align-self: flex-end;
+    color: black;
 }

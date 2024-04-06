@@ -18,13 +18,12 @@
     position: absolute;
     bottom: 5px;
     left: 5px;
-
 }
 
 #next-img{
     width: 20px;
     height: auto;
-    position: absolute;
+    position:absolute;
     bottom: 5px;
     right: 5px;
 }
