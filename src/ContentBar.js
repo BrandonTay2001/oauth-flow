@@ -11,13 +11,13 @@ function ContentBar(props) {
 
         if (props.folder !== i) {
             buttons.push(
-                <button className="unclicked" id={button_lib[i]} onClick={() => props.updateFolder(i, props.token)}>
+                <button className="unclicked" id={button_lib[i]} key={ button_lib[i]} onClick={() => props.updateFolder(i, props.token)}>
                     {library[i]}
                 </button>
             );
         } else {
             buttons.push(
-                <button className="clicked" id={button_lib[i]} onClick={() => props.updateFolder(i, props.token)}>
+                <button className="clicked" id={button_lib[i]} key={ button_lib[i]} onClick={() => props.updateFolder(i, props.token)}>
                     {library[i]}
                 </button>
             )

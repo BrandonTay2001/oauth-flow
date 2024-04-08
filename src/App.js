@@ -144,6 +144,7 @@ class App extends React.Component{
         content["bcc"] = data.email.bcc;
         content["cc"] = data.email.cc;
         content["subject"] = data.email.subject;  
+        content['ics'] = data.email.ics; 
         this.update({ selected_content: content, selected_category: data.email.category, clicked_time: Date.now(), message_list: [], selected_email_summary: '', daily_page: 0} );
 
       })
@@ -227,7 +228,6 @@ class App extends React.Component{
       .then(response => response.json())
       .then(data => {
         this.update({ selected_email_summary: data.summary });
-        console.log(data.summary);
         }).catch(error => {
         console.log(error);
     })
@@ -243,7 +243,6 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data.summary);
         this.update({ daily_summary: data.summary, daily_page: 1});
       })
       .catch(error => {
@@ -304,8 +303,28 @@ class App extends React.Component{
         console.log(error);
     })
   }
-
   
+  generateICS(id) {
+    fetch('http://localhost:5000/emails/generateICS/' + id, {
+      method: 'GET'
+    })
+      .then(response => response.blob())
+      .then(blob => {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'event.ics'; // or any other filename you want
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      })
+      .catch(error => {
+        console.log(error);
+    })
+
+  }
+
   handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       this.searchKeywords();
@@ -338,7 +357,7 @@ class App extends React.Component{
 
         {this.state.token !== "" && this.state.selected_email === -1 && this.state.emails !== typeof undefined && <Emails id="email-col" page={this.state.page} emails={this.state.emails} token={this.state.token} getOneEmail={this.getOneEmail} />}
         
-        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={this.changeCategory} selected_category={this.state.selected_category} update={this.update} get_summary={this.getEmailSummary} summary={ this.state.selected_email_summary} />}
+        {this.state.token !== "" && this.state.selected_email !== -1 && <OneEmail id="one-email" email={this.state.selected_content} email_id={this.state.selected_email} go_back={this.returnFromOneEmail} folder={this.state.folder} change_category={this.changeCategory} selected_category={this.state.selected_category} update={this.update} get_summary={this.getEmailSummary} summary={ this.state.selected_email_summary} get_ics={this.generateICS}/>}
         {this.state.token !== '' && this.state.selected_email_summary.length > 0 && <SummaryBox id='summary' update={this.update} summary={this.state.selected_email_summary}/>}
         
 
