@@ -27,7 +27,7 @@ function LoginButton(props) {
       account: accounts[0], // Assuming there is only one signed-in account
     };
 
-    props.update({ login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, selected_category: "", selected_email_summary: '', clicked_time: 0, selected_chat: false, message_list: [], selected_chat_type: '0' });
+    props.update({ login: 0, folder: 0, page: 1, total_num: 0, token: "", emails: [], selected_email: -1, selected_content: {}, selected_category: "", selected_email_summary: '', clicked_time: 0, selected_chat: false, message_list: [], selected_chat_type: '0', daily_summary: [], daily_page: 0 });
 
     instance.logoutPopup(logoutRequest);
   };
