@@ -24,6 +24,15 @@
     border-radius: 10px;
 }
 
+#ics-button{
+    margin-left: 10px;
+    background-color: #c9ada7;
+    color: white;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 10px;
+}
+
 #email-subject{
     background-color: rgb(255,255,255,70%);
 }
