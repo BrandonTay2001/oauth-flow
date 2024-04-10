@@ -35,8 +35,8 @@ body{
 
 #logo{
   margin: 1%;
-  height: 5%;
-  width: 5%;
+  height: 90px;
+  width: 90px;
   float: left;
   display: inline;
   cursor: pointer;

@@ -11,12 +11,20 @@ function OneEmail(props) {
             ))}
         </select>
     
-    let structure = [dropdown,
-        <button id='summary-button' onClick={() => props.get_summary()}>Get Summary</button>];
+    let structure = [dropdown]
+        
+    if (props.email.score !== undefined & props.email.score !== typeof undefined & props.email.score !== null) {
+        structure.push(<span id='score-text'>Importance Score: {props.email.score}</span>);
+    }
+
+    structure.push(<button id='summary-button' onClick={() => props.get_summary()}>Get Summary</button>);
+
     
     if (props.email.ics === true) {
         structure.push(<button id='ics-button' onClick={() => props.get_ics(props.email_id)}>Add to Schedule</button>);
     }
+
+    structure.push(<button id='outlook-button' onClick={()=>window.open(props.email.link, '_blank')}>Check on Outlook</button>)
     
     structure.push(<p id="email-subject">Subject: {props.email.subject}</p>);
     if (props.email.from_address === props.email.from_name) {
