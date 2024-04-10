@@ -88,7 +88,7 @@ class App extends React.Component{
       .then(response => response.json())
       .then((data) => {
 
-        if (data.emails === typeof undefined && data.emails === undefined) {
+        if (data.emails === typeof undefined || data.emails === undefined || data.emails === null) {
           this.update({ emails: [], total_num: 0 });
         }
         else {
@@ -110,7 +110,7 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then((data) => {
-        if (data.emails !== typeof undefined && data.emails !== undefined) {
+        if (data.emails !== typeof undefined || data.emails !== undefined || data.emails !== null) {
           this.update({ emails: data.emails, total_num: data.totalEmails, folder: category });
         } else {
           this.update({emails: [], total_num: 0, folder: category });
@@ -136,7 +136,6 @@ class App extends React.Component{
 
         let content = {};
 
-        content["id"] = data.email.id;
         content["category"] = data.email.category;
         content["from_address"] = data.email.sender.address;
         content["from_name"] = data.email.sender.name;
@@ -145,6 +144,9 @@ class App extends React.Component{
         content["cc"] = data.email.cc;
         content["subject"] = data.email.subject;  
         content['ics'] = data.email.ics; 
+        content['score'] = data.email.importanceScore;
+        content['link'] = data.email.webLink;
+
         this.update({ selected_content: content, selected_category: data.email.category, clicked_time: Date.now(), message_list: [], selected_email_summary: '', daily_page: 0} );
 
       })
