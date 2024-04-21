@@ -4,6 +4,14 @@
   width: 100%;
 }
 
+.overlay {
+  position: fixed;
+  overflow-y: scroll;
+}
+.overlay-inside {
+  position: static;
+}
+
 body{
   box-sizing: border-box;
   background-color: #F2E9E4;
@@ -19,12 +27,6 @@ body{
 
 #login-logo {
   margin-bottom: 25px;
-}
-
-#daily-summary-button{
-  height: min-content;
-  justify-content: flex-end;
-  margin-top: 3%;
 }
 
 #top-bar{
@@ -88,7 +90,10 @@ body{
   z-index: 9999;
   width: 400px;
   height:200px;
-  overflow: scroll;
+  justify-content: flex-end;
+  display: flexbox;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 #email-col{
@@ -110,15 +115,16 @@ body{
   position: fixed;
   bottom: 50px;
   right: 20px;
-  width: 350px;
   height: 400px;
   z-index: 99;
-  overflow: scroll;
   background-size: cover;
   color: white;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgb(154, 140, 152, 0.8);
+  justify-content: flex-end;
+  overflow-y: scroll;
 }
 
 #summary-box{
@@ -128,7 +134,7 @@ body{
   left: 20px;
   z-index: 3;
   padding: 10px;
-  overflow: scroll;
+  overflow-y: scroll;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

@@ -1,11 +1,3 @@
-#chat-box {
-    background-color: rgb(154, 140, 152, 0.8);
-    justify-content: flex-end;
-    display:flexbox;
-    flex-direction: column;
-    overflow: scroll;
-}
-
 #close-logo {
     width: 7%;
     height: 7%;
