@@ -245,7 +245,12 @@ class App extends React.Component{
     })
       .then(response => response.json())
       .then(data => {
-        this.update({ daily_summary: data.summary, daily_page: 1});
+        if (data.summary === null) {
+          this.update({ daily_summary: "", daily_page: 0});
+        }
+        else {
+          this.update({ daily_summary: data.summary, daily_page: 1});
+        }
       })
       .catch(error => {
         console.log(error);
@@ -282,7 +287,7 @@ class App extends React.Component{
 
   smartSearch(message) {
     
-    if (message.length === 0 || message === undefined || message === typeof undefined) {
+    if (message === "" || message === undefined || message === typeof undefined) {
       return;
     }
 
